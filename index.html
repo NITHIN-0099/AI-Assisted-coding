@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Automated Health Record Analyzer</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <div>
+        <p class="eyebrow">Automated Health Record Analyzer</p>
+        <h1>AI-assisted clinical triage, minus the guesswork</h1>
+        <p class="subhead">
+          Drop in patient vitals, labs, and symptom notes. Our lightweight AI heuristics highlight
+          risk, surface red flags, and suggest next actions—all in milliseconds.
+        </p>
+      </div>
+      <div class="status-pill" id="apiStatus">Backend: checking...</div>
+    </header>
+
+    <main class="layout">
+      <section class="panel">
+        <h2>Patient Intake</h2>
+        <form id="recordForm">
+          <div class="field-group">
+            <label for="patientName">Patient Name</label>
+            <input id="patientName" name="patientName" placeholder="e.g., Jordan Smith" required />
+          </div>
+          <div class="field-grid">
+            <div class="field-group">
+              <label for="age">Age</label>
+              <input id="age" name="age" type="number" min="0" max="120" required />
+            </div>
+            <div class="field-group">
+              <label for="gender">Gender</label>
+              <select id="gender" name="gender">
+                <option value="female">Female</option>
+                <option value="male">Male</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+          </div>
+
+          <h3>Vitals</h3>
+          <div class="field-grid">
+            <div class="field-group">
+              <label for="heartRate">Heart Rate (bpm)</label>
+              <input id="heartRate" name="heartRate" type="number" />
+            </div>
+            <div class="field-group">
+              <label for="systolic">Systolic (mmHg)</label>
+              <input id="systolic" name="systolic" type="number" />
+            </div>
+            <div class="field-group">
+              <label for="diastolic">Diastolic (mmHg)</label>
+              <input id="diastolic" name="diastolic" type="number" />
+            </div>
+            <div class="field-group">
+              <label for="temperature">Temperature (°C)</label>
+              <input id="temperature" name="temperature" type="number" step="0.1" />
+            </div>
+          </div>
+
+          <h3>Labs</h3>
+          <div class="field-grid">
+            <div class="field-group">
+              <label for="ldl">LDL (mg/dL)</label>
+              <input id="ldl" name="ldl" type="number" />
+            </div>
+            <div class="field-group">
+              <label for="hdl">HDL (mg/dL)</label>
+              <input id="hdl" name="hdl" type="number" />
+            </div>
+            <div class="field-group">
+              <label for="a1c">A1C (%)</label>
+              <input id="a1c" name="a1c" type="number" step="0.1" />
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label for="symptoms">Key Symptoms (comma separated)</label>
+            <input id="symptoms" name="symptoms" placeholder="chest pain, fatigue, dizziness" />
+          </div>
+
+          <div class="field-group">
+            <label for="notes">Clinician Notes</label>
+            <textarea id="notes" name="notes" rows="4" placeholder="Quick narrative..."></textarea>
+          </div>
+
+          <button type="submit" class="primary-btn">Generate Analysis</button>
+        </form>
+      </section>
+
+      <section class="panel results-panel">
+        <h2>AI Findings</h2>
+        <div id="resultsPlaceholder" class="placeholder">
+          Fill out the intake form to see automated insights.
+        </div>
+        <div id="results" class="results hidden">
+          <div class="risk-score">
+            <p class="eyebrow">Risk Score</p>
+            <p id="riskValue" class="risk-value">--</p>
+            <p id="riskLevel" class="risk-level">Risk level pending analysis</p>
+          </div>
+          <div class="result-block">
+            <p class="eyebrow">Patient Snapshot</p>
+            <p id="patientSummary"></p>
+          </div>
+          <div class="result-block">
+            <p class="eyebrow">Flags</p>
+            <ul id="flagsList"></ul>
+          </div>
+          <div class="result-block">
+            <p class="eyebrow">Recommendations</p>
+            <ul id="recommendationsList"></ul>
+          </div>
+          <div class="result-block">
+            <p class="eyebrow">Score Breakdown</p>
+            <ul id="metricsList"></ul>
+          </div>
+          <div class="result-block timestamp">
+            <p class="eyebrow">Generated</p>
+            <p id="timestamp"></p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <p>
+        Prototype AI heuristics only. Do not use for clinical decision-making. Built with vanilla HTML, CSS, and JS.
+      </p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
+
